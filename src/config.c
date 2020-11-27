@@ -310,6 +310,17 @@ merge_ops( int cops, int ops[] )
 	return 0;
 }
 
+void
+get_config_file_path( char *path )
+{
+	char *env;
+	if( (env = getenv("MBSYNC_CONFIG_FILE") ) != NULL )
+		nfsnprintf( path, sizeof(path), "%s", env );
+	else if ((env = getenv("XDG_CONFIG_HOME") ) != NULL )
+		nfsnprintf( path, sizeof(path), "%s/" EXE "/" EXE "rc", env );
+	else
+		nfsnprintf( path, sizeof(path), "%s/." EXE "rc", Home);
+}
 int
 load_config( const char *where, int pseudo )
 {
@@ -325,7 +336,7 @@ load_config( const char *where, int pseudo )
 
 	if (!where) {
 		assert( !pseudo );
-		nfsnprintf( path, sizeof(path), "%s/." EXE "rc", Home );
+		get_config_file_path( path );
 		cfile.file = path;
 	} else
 		cfile.file = where;

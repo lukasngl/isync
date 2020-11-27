@@ -46,5 +46,6 @@ int parse_size( conffile_t *cfile );
 int getcline( conffile_t *cfile );
 int merge_ops( int cops, int ops[] );
 int load_config( const char *filename, int pseudo );
+int get_config_file_path( char *path );
 
 #endif
